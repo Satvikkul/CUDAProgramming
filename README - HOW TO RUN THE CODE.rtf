@@ -1,0 +1,158 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
+{\fonttbl\f0\fnil\fcharset0 Calibri-Bold;\f1\fnil\fcharset0 Calibri;\f2\froman\fcharset0 TimesNewRomanPS-BoldMT;
+\f3\froman\fcharset0 TimesNewRomanPSMT;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11905\paperh16837\margl1440\margr1440\vieww25400\viewh13540\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\b\fs40 \cf0 \
+README - HOW TO RUN THE CODE\
+Name: Satvik Kulshreshtha\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0\fs22 \cf0 \
+
+\f2\b\fs28 1. A simple test of your GPU hardware and CUDA programming environment deviceQuery is a tool included in the CUDA toolkit. Using deviceQuery, you can check the basic hardware information of your GPU. Simply run \'93deviceQuery\'94 and try to answer the following questions based on the output. \
+\pard\pardeftab720\sa49\partightenfactor0
+\cf0 1.How many GPU devices are there in your machine? \
+2. What is the maximum amount of shared memory per thread block? \
+3. What is the maximum dimension size of a thread block? \
+4. What is the maximum number of registers available per thread block? \
+\pard\pardeftab720\partightenfactor0
+\cf0 5. What is the global memory size? \
+\
+ Steps to run the code :-\
+1. Open terminal.\
+2. Connect to the GPU cluster using : \CocoaLigature0 ssh -i /Users/satvikkulshreshtha/SSHKEY satvikkul@alpha.ucmerced.edu\
+3.Login to head node : ssh n01\
+4. Go to the CUDA path: cd /usr/local/cuda\CocoaLigature1 \
+5. Go to the Sample folder : \CocoaLigature0 cd samples\CocoaLigature1 \
+6. In the sample folder, go to the 1_Utilities folder : \CocoaLigature0 cd 1_Utilities/\CocoaLigature1 \
+7. In the 1_Utilities folder, go to deviceQuery file and run it : \CocoaLigature0 cd deviceQuery\CocoaLigature1 \
+8. To run the deviceQuery file : \CocoaLigature0 ./deviceQuery\CocoaLigature1 \
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\pard\pardeftab720\ri385\partightenfactor0
+\cf0 2. 1D stencil \
+\
+2.1 In the lecture on Aug 25, we reviewed a code applying a 1D stencil to a 1D array of elements. Implement, compile and run the code. Change the number of thread blocks and the number of threads per block, and measure performance. \
+\
+\pard\pardeftab720\partightenfactor0
+\cf0  Steps to run the code :-\
+1. Open terminal.\
+2. Connect to the GPU cluster using : \CocoaLigature0 ssh -i /Users/satvikkulshreshtha/SSHKEY satvikkul@alpha.ucmerced.edu\
+3.Login to head node : ssh n01\
+4.In this folder -\
+4.1. To open the text editor : vi 1D_stencil.cu\
+4.2. Closing the editor: [ESC] :wq \
+4.3 To compile the code: /usr/local/cuda/bin/nvcc 1D_stencil.cu -o 1D_stencil.o\
+4.4 To run the file : ./1D_stencil.o\
+\CocoaLigature1 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \CocoaLigature0 \
+\pard\pardeftab720\ri385\partightenfactor0
+\cf0 \CocoaLigature1 2.2 Change the 1D stencil implementation to use texture memory (1D texture) and measure performance. \
+\
+\pard\pardeftab720\partightenfactor0
+\cf0  Steps to run the code :-\
+1. Open terminal.\
+2. Connect to the GPU cluster using : \CocoaLigature0 ssh -i /Users/satvikkulshreshtha/SSHKEY satvikkul@alpha.ucmerced.edu\
+3.Login to head node : ssh n01\
+4.In this folder -\
+4.1. To open the text editor : vi 1D_stencil_textmem.cu\
+4.2. Closing the editor: [ESC] :wq \
+4.3 To compile the code: /usr/local/cuda/bin/nvcc 1D_stencil_textmem.cu -o 1D_stencil_textmem.o\
+4.4 To run the file : ./1D_stencil_textmem.o\
+\CocoaLigature1 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\pard\pardeftab720\ri385\partightenfactor0
+\cf0 2.3 Change the 1D stencil implementation to use constant memory and measure performance. \
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 Steps to run the code :-\
+1. Open terminal.\
+2. Connect to the GPU cluster using : \CocoaLigature0 ssh -i /Users/satvikkulshreshtha/SSHKEY satvikkul@alpha.ucmerced.edu\
+3.Login to head node : ssh n01\
+4.In this folder -\
+4.1. To open the text editor : vi 1D_stencil_constmem.cu\
+4.2. Closing the editor: [ESC] :wq \
+4.3 To compile the code: /usr/local/cuda/bin/nvcc 1D_stencil_constmem.cu -o 1D_stencil_constmem.o\
+4.4 To run the file : ./1D_stencil_constmem.o\CocoaLigature1 \
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\pard\pardeftab720\ri385\partightenfactor0
+\cf0 2.4 nvprof is an NVIDIA profiling tool that allows you to understand and optimize the performance of your CUDA application [1]. Here is how to use nvprof to profile a CUDA application: \
+nvprof [options] [CUDA-application] [application-arguments] \
+Use nvprof to answer the following questions: \
+2.4.1 For the above three implementations, what is the GPU occupancy? Which implementation has the best occupancy? \
+\pard\pardeftab720\partightenfactor0
+\cf0 Steps to run the code :-\
+1. Open terminal.\
+2. Connect to the GPU cluster using : \CocoaLigature0 ssh -i /Users/satvikkulshreshtha/SSHKEY satvikkul@alpha.ucmerced.edu\
+3.Login to head node : ssh n01\
+4.In this folder - Go to\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\cf0 4.1-For shared memory-             /usr/local/cuda/bin/nvprof -m achieved_occupancy ./1D_stencil.o\
+4.2-For texture memory-    /usr/local/cuda/bin/nvprof -m achieved_occupancy ./1D_stencil_textmem.o\
+4.3-For constant memory-   /usr/local/cuda/bin/nvprof -m achieved_occupancy ./1D_stencil_constmem.o\
+\pard\pardeftab720\partightenfactor0
+\cf0 \CocoaLigature1 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\pard\pardeftab720\ri385\partightenfactor0
+\cf0 \
+2.4.2 For the above three implementations, what is the DRAM utilization? Which \
+implementation has the best utilization and why? \
+\pard\pardeftab720\partightenfactor0
+\cf0 Steps to run the code :-\
+1. Open terminal.\
+2. Connect to the GPU cluster using : \CocoaLigature0 ssh -i /Users/satvikkulshreshtha/SSHKEY satvikkul@alpha.ucmerced.edu\
+3.Login to head node : ssh n01\
+4.In this folder - Go to\CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\cf0 \CocoaLigature0 4.1-For shared memory-  /usr/local/cuda/bin/nvprof -m dram_utilization ./1D_stencil.o\
+4.2-For texture memory-   /usr/local/cuda/bin/nvprof -m dram_utilization ./1D_stencil_textmem.o\
+4.3-For constant memory-   /usr/local/cuda/bin/nvprof -m dram_utilization ./1D_stencil_constmem.o\
+\pard\pardeftab720\partightenfactor0
+\cf0 \CocoaLigature1 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab720\ri385\partightenfactor0
+\cf0 2.4.3 For the above three implementations, what is the L2 cache utilization? Which \
+implementation has the best utilization and why? \
+[1] http://docs.nvidia.com/cuda/profiler-users-guide/#nvprof-overview \
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 Steps to run the code :-\
+1. Open terminal.\
+2. Connect to the GPU cluster using : \CocoaLigature0 ssh -i /Users/satvikkulshreshtha/SSHKEY satvikkul@alpha.ucmerced.edu\
+3.Login to head node : ssh n01\
+4.In this folder - Go to\CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\cf0 \CocoaLigature0 4.1-For shared memory-   /usr/local/cuda/bin/nvprof -m l2_utilization ./1D_stencil.o\
+4.2-For texture memory-   /usr/local/cuda/bin/nvprof -m l2_utilization ./1D_stencil_constmem.o\
+4.3-For constant memory-   /usr/local/cuda/bin/nvprof -m l2_utilization ./1D_stencil_textmem.o\CocoaLigature1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..x\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\pard\pardeftab720\ri385\partightenfactor0
+\cf0 \
+\pard\pardeftab720\ri725\partightenfactor0
+\cf0 3. GPU-based matrix multiplication \
+\
+In this task, you will develop a kernel code that implements matrix multiplication. Consider to use shared memory to improve performance of your code. Given the limited capacity of shared memory, you might want to use blocking techniques [2]. Use different matrix size as input to your program and measure performance. Make sure that your matrix size is much larger than the shared memory. \
+[2] http://csapp.cs.cmu.edu/2e/waside/waside-blocking.pdf \
+Please submit your lab results at Catcourses. Your results should include a README for how to run your code, your code, and a short report (up to 2 pages). You may find NVIDIA CUDA programming guide (http://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#axzz3kSXOvjqx) helpful for CUDA programming.\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0  Steps to run the code :-\
+1. Open terminal.\
+2. Connect to the GPU cluster using : \CocoaLigature0 ssh -i /Users/satvikkulshreshtha/SSHKEY satvikkul@alpha.ucmerced.edu\
+3.Login to head node : ssh n01\
+4.In this folder -\
+4.1. To open the text editor : vi matrix_mul.cu\
+4.2. Closing the editor: [ESC] :wq \
+4.3 To compile the code: /usr/local/cuda/bin/nvcc matrix_mul.cu -o matrix_mul.o\
+4.4 To run the file : ./matrix_mul.o\
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0\fs24 \cf0 \CocoaLigature1 \
+
+\f0\b\fs22 \CocoaLigature0 \
+}
