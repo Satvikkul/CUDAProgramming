@@ -1,0 +1,83 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
+#define N 512
+#define RADIUS 3
+#define BLOCK_SIZE 8
+
+texture<int> texture_mem;
+
+
+__global__ void texture_stencil_1d(int *out){
+        __shared__ int temp[BLOCK_SIZE + 2 * RADIUS];
+        int gindex = threadIdx.x + blockIdx.x * blockDim.x;
+        int lindex = threadIdx.x + RADIUS;
+        // Read input elements into shared memory
+        temp[lindex] = tex1Dfetch(texture_mem, gindex + RADIUS);
+        if (threadIdx.x < RADIUS) {
+                temp[lindex - RADIUS] = tex1Dfetch(texture_mem, gindex);
+                temp[lindex + BLOCK_SIZE] = tex1Dfetch(texture_mem, gindex + BLOCK_SIZE + RADIUS);
+        }
+        // Synchronize (ensure all the data is available)
+        __syncthreads();
+        // Apply the stencil
+        int result = 0;
+        for (int offset = -RADIUS ; offset <= RADIUS ; offset++)
+        result += temp[lindex + offset];
+
+        // Store the result
+        out[gindex] = result;
+}
+
+
+void fill_ints(int *x, int n) {
+        fill_n(x, n, 1);
+}
+int main(void) {
+        int i;
+        int *in, *out; // host copies of a, b, c
+        int *d_in, *d_out; // device copies of a, b, c
+        int size = (N + 2*RADIUS) * sizeof(int);
+        float time;
+
+        // Alloc space for host copies and setup values
+        in = (int *)malloc(size);
+        fill_ints(in, N + 2*RADIUS);
+        out = (int *)malloc(size); fill_ints(out, N + 2*RADIUS);
+
+        // Alloc space for device copies
+        cudaMalloc((void **)&d_in, size);
+        cudaMalloc((void **)&d_out, size);
+
+        // Copy to device
+
+        cudaMemcpy(d_in, in, size, cudaMemcpyHostToDevice);
+        cudaMemcpy(d_out, out, size, cudaMemcpyHostToDevice);
+        ( cudaBindTexture( NULL, texture_mem, d_in , size ) );
+
+
+        // Record Time before kernel execution
+        cudaEvent_t start, stop;
+        cudaEventCreate(&start);
+        cudaEventCreate(&stop);
+        cudaEventRecord(start,0);
+
+        // Launch stencil_1d() kernel on GPU
+        texture_stencil_1d<<<N/BLOCK_SIZE,BLOCK_SIZE>>>(d_out + RADIUS);
+
+        // Record time after kernel execution
+        cudaEventRecord(stop, 0);
+        cudaEventSynchronize(stop);
+        cudaEventElapsedTime(&time, start, stop);
+
+        // Copy result back to host
+        cudaMemcpy(out, d_out, size, cudaMemcpyDeviceToHost);
+        printf("GPU Performance [in ms] = %f", time);
+
+        // Cleanup
+        cudaUnbindTexture(texture_mem);
+        free(in); free(out);
+        cudaFree(d_in); cudaFree(d_out);
+        return 0;
+}
